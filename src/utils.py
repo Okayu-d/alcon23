@@ -6,7 +6,7 @@ import numpy as np
 import random
 
 
-def get_vocab(path='../input/vocab'):
+def get_vocab(path='./alcon23/input/vocab'):
     with open(os.path.join(path, 'char2unicode.json'), 'r') as f:
         char2uni = json.load(f)
     with open(os.path.join(path, 'unicode2char.json'), 'r') as f:
@@ -22,13 +22,13 @@ def get_vocab(path='../input/vocab'):
             'uni2index': uni2index}
 
 
-def get_train_df(path='../input/tables'):
+def get_train_df(path='./alcon23/input/tables'):
     return pd.read_csv(os.path.join(path, 'train.csv'))
 
-def get_test_df(path='../input/tables'):
+def get_test_df(path='./alcon23/input/tables'):
     return pd.read_csv(os.path.join(path, 'test.csv'))
 
-def get_char_df(path='../input/tables'):
+def get_char_df(path='./alcon23/input/tables'):
     return pd.read_csv(os.path.join(path, 'character.csv'))
 
 def seed_setting(seed=1029):
