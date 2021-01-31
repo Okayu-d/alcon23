@@ -27,7 +27,6 @@ def main():
     print('make Unicode <---> character')
     unicode2char =  {}
     char2unicode = {}
-    pprint.pprint(index2word)
     for uni in v.to_dict()['index2word']:
         if (uni is np.nan): break # 追加 NaN(float)の時は飛ばす．（dict()の最後がNaN)
         ch = unicode_table[unicode_table['Unicodecode point'] == uni]['character'].item()
