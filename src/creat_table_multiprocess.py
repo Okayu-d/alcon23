@@ -16,20 +16,20 @@ import utils
 
 
 def main():
-    os.makedirs('../input/tables', exist_ok=True)
+    os.makedirs('./alcon23/input/tables', exist_ok=True)
     print('=== make train table ===')
-    # creat_train_table()
+    creat_train_table()
     print('=== make  test table ===')
     # creat_test_table()
     print('=== make character table ===')
-    creat_character_table()
+    # creat_character_table()
 
 def creat_train_table(seed=531):
     # 配布されたcsvファイルを読み込む
-    train_df = pd.read_csv('../input/dataset/train/annotations.csv')
+    train_df = pd.read_csv('./alcon23/input/dataset/train/annotations.csv')
     
     vocab = utils.get_vocab()
-    with open('../input/vocab/rarity.json', 'r') as f:
+    with open('./alcon23/input/vocab/rarity.json', 'r') as f:
         rarity = json.load(f)
 
 
@@ -41,15 +41,15 @@ def creat_train_table(seed=531):
     for k, (train_index, val_index) in enumerate(skf.split(meta.index, meta.rarity)):
         meta.loc[val_index, 'valid'] = k
     meta = meta.set_index('ID')
-    meta.to_csv('../input/tables/meta-train.csv')
+    meta.to_csv('./alcon23/input/tables/meta-train.csv')
     drop_columns = ['height', 'width', 'aspect', 'rarity']
-    meta.drop(drop_columns, axis=1).to_csv('../input/tables/train.csv')
+    meta.drop(drop_columns, axis=1).to_csv('./alcon23/input/tables/train.csv')
 
 def process_train(row, vocab,rarity):
     train_dict = dict()
     ID = row['ID']
     filename = str(ID) +'.jpg'
-    image = np.array(Image.open(os.path.join('../input/dataset/train/imgs', filename)))
+    image = np.array(Image.open(os.path.join('./alcon23/input/dataset/train/imgs', filename)))
     uni1 = row['Unicode1']
     uni2 = row['Unicode2']
     uni3 = row['Unicode3']
@@ -97,21 +97,21 @@ def process_train(row, vocab,rarity):
 
 def creat_test_table():
     # 配布されたcsvファイルを読み込む
-    test_df = pd.read_csv('../input/dataset/test/annotations.csv')
+    test_df = pd.read_csv('./alcon23/input/dataset/test/annotations.csv')
 
     test_list = Parallel(n_jobs=-1)([delayed(process_test)(row) for index, row in tqdm(test_df.iterrows(), total=len(test_df))])
     meta = pd.DataFrame(test_list)
     meta = meta.sort_values('ID').set_index('ID')
-    meta.to_csv('../input/tables/meta-test.csv')
+    meta.to_csv('./alcon23/input/tables/meta-test.csv')
     drop_columns = ['height', 'width', 'aspect']
-    meta.drop(drop_columns, axis=1).to_csv('../input/tables/test.csv')
+    meta.drop(drop_columns, axis=1).to_csv('./alcon23/input/tables/test.csv')
 
 def process_test(row):
     test_dict = {}
 
     ID = int(row['ID'])
     filename = str(ID) + '.jpg'
-    image = np.array(Image.open(os.path.join('../input/dataset/test/imgs/', filename)))
+    image = np.array(Image.open(os.path.join('./alcon23/input/dataset/test/imgs/', filename)))
     h, w, c = image.shape
     aspect = h / w
     split1, split2, margin = get_split_point(image)
@@ -131,10 +131,10 @@ def process_test(row):
 def creat_character_table(seed=531):
     
     vocab = utils.get_vocab()
-    with open('../input/vocab/rarity.json', 'r') as f:
+    with open('./alcon23/input/vocab/rarity.json', 'r') as f:
         rarity = json.load(f)
 
-    image_paths = glob.glob(os.path.join('../input/dataset/train_kana/U+*/*.jpg'))
+    image_paths = glob.glob(os.path.join('./alcon23/input/dataset/train_kana/U+*/*.jpg'))
     char_list = Parallel(n_jobs=-1)([delayed(process_char)(path, vocab, rarity) for path in tqdm(image_paths, total=len(image_paths))])
     
     meta = pd.DataFrame(char_list).sort_values('target')
@@ -143,9 +143,9 @@ def creat_character_table(seed=531):
         meta.loc[val_index, 'valid'] = k
 
     meta = meta.set_index('file')
-    meta.to_csv('../input/tables/meta-character.csv')
+    meta.to_csv('./alcon23/input/tables/meta-character.csv')
     drop_columns = ['height', 'width', 'aspect', 'rarity']
-    meta.drop(drop_columns, axis=1).to_csv('../input/tables/character.csv')
+    meta.drop(drop_columns, axis=1).to_csv('./alcon23/input/tables/character.csv')
 
 def process_char(path, vocab, rarity):
     char_dict = dict()
