@@ -44,7 +44,7 @@ def main():
 
 
     print('{}-{}-{} {}:{}:{}'.format(now.year, now.month, now.day, now.hour, now.minute, now.second))
-    with open('../params/exp{}.yaml'.format(EXP_NO), "r+") as f:
+    with open('./alcon23/params/exp{}.yaml'.format(EXP_NO), "r+") as f:
         param = yaml.load(f, Loader=yaml.FullLoader)
     param['date'] = now_date
     # seed set
@@ -135,7 +135,7 @@ def main():
         min_loss = 10**5
 
 
-        writer = tbx.SummaryWriter("../log/exp{}/{}/fold{}".format(EXP_NO, now_date, fold))
+        writer = tbx.SummaryWriter("./alcon23/log/exp{}/{}/fold{}".format(EXP_NO, now_date, fold))
 
         for key, val in param.items():
             writer.add_text('data/hyperparam/{}'.format(key), str(val), 0)
