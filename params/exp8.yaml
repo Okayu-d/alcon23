@@ -1,9 +1,9 @@
 batch size: 40
 device: cuda:0
-dataroot: ./alcon23/input/dataset/
-vocabdir: ./alcon23/input/vocab/
-tabledir: ./alcon23/input/tables/
-save path: ./alcon23/
+dataroot: ../input/dataset/
+vocabdir: ../input/vocab/
+tabledir: ../input/tables/
+save path: ../
 GPU: 1
 thread: 16
 debug: False
