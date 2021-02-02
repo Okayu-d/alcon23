@@ -44,7 +44,7 @@ def main():
 
 
     print('{}-{}-{} {}:{}:{}'.format(now.year, now.month, now.day, now.hour, now.minute, now.second))
-    with open('./alcon23/params/exp{}.yaml'.format(EXP_NO), "r+") as f:
+    with open('../params/exp{}.yaml'.format(EXP_NO), "r+") as f:
         param = yaml.load(f, Loader=yaml.FullLoader)
     param['date'] = now_date
     # seed set
@@ -57,6 +57,7 @@ def main():
     for fold in param['fold']:
         # /mnt/hdd1/alcon2019/ + exp0/ + 2019-mm-dd_hh-mm-ss/ + foldN
         outdir = os.path.join(param['save path'], EXP_NAME ,now_date, 'fold{}'.format(fold))
+        print(outdir)
         if os.path.exists(param['save path']):
             os.makedirs(outdir, exist_ok=True)
         else:
