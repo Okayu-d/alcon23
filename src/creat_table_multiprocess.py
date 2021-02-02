@@ -20,9 +20,9 @@ def main():
     print('=== make train table ===')
     creat_train_table()
     print('=== make  test table ===')
-    # creat_test_table()
+    creat_test_table()
     print('=== make character table ===')
-    # creat_character_table()
+    creat_character_table()
 
 def creat_train_table(seed=531):
     # 配布されたcsvファイルを読み込む
