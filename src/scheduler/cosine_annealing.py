@@ -1,7 +1,6 @@
 import math
 from torch.optim.lr_scheduler import _LRScheduler
 
-
 class CosineAnnealingWarmUpRestarts(_LRScheduler):
     def __init__(self, optimizer, T_0, T_mult=1, eta_max=0.1, T_up=0, last_epoch=-1):
         if T_0 <= 0 or not isinstance(T_0, int):
@@ -15,8 +14,8 @@ class CosineAnnealingWarmUpRestarts(_LRScheduler):
         self.eta_max = eta_max
         self.T_up = T_up
         self.T_i = T_0
-        super(CosineAnnealingWarmUpRestarts, self).__init__(optimizer, last_epoch)
         self.T_cur = last_epoch
+        super(CosineAnnealingWarmUpRestarts, self).__init__(optimizer, last_epoch)
 
     def get_lr(self):
         if self.T_cur == -1:
