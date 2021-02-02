@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn._reduction as _Reduction
-from torch._jit_internal import weak_script
+# from torch._jit_internal import weak_script
 
-@weak_script
+# @weak_script
 def cross_entropy_without_softmax(input, target, weight=None, size_average=None, ignore_index=-100,
                   reduce=None, reduction='mean'):
     if size_average is not None or reduce is not None:
